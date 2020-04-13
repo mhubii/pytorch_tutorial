@@ -8,13 +8,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # create a data frame to save locations and labels
-    df = pd.DataFrame(columns=['file_path', 'label'])
+    df = pd.DataFrame(columns=['file_paths', 'labels'])
 
     for idx, folder in enumerate(args.folders):
         files = os.scandir(folder)
         for file in files:
             path = os.path.join(folder, file.name)
-            df.append({'file_path': path, 'label': idx}, ignore_index=True)
+            df = df.append({'file_paths': path, 'labels': idx}, ignore_index=True)
 
     # save as csv file
     df.to_pickle('files.df')

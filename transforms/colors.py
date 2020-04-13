@@ -1,2 +1,0 @@
-class RandomBrightness(object):
-    pass

@@ -1,0 +1,2 @@
+class RandomBrightness(object):
+    pass

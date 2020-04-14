@@ -1,1 +1,5 @@
+df_loc: '/tmp/pytorch_tutorial/files.df'
 parameters:
+  epochs: 30
+  batch_size: 64
+  lr: 0.01

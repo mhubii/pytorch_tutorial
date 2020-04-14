@@ -1,6 +1,7 @@
 import argparse
 import yaml
 import torch
+import numpy as np
 from torchvision import transforms
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.tensorboard.writer import SummaryWriter
@@ -35,6 +36,7 @@ if __name__ == '__main__':
     criterion = torch.nn.NLLLoss()
 
     writer = SummaryWriter()
+    best_loss = np.inf
     i = 0
 
     for e in range(config['parameters']['epochs']):
@@ -47,13 +49,17 @@ if __name__ == '__main__':
             loss.backward()
             optimizer.step()
 
+            if loss.item() < best_loss:
+                best_loss = loss.item()
+                torch.save(model.state_dict(), 'best_model.pt')
+
             fig = plt.figure()
             plt.title(
                 'Probability Apple {}/Banana {}'.format(
-                    torch.exp(out[0][0]).detach().cpu(), 
-                    torch.exp(out[0][1]).detach().cpu()
+                    torch.exp(out[0][0]),
+                    torch.exp(out[0][1])
             ))
-            plt.imshow(imgs[0].detach().cpu().numpy().transpose(2,1,0))
+            plt.imshow(imgs[0].cpu().numpy().transpose(2,1,0))
             writer.add_figure('probability', fig, i)
 
             writer.add_scalar('train/loss', loss.item(), i)

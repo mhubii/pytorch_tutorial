@@ -6,6 +6,7 @@ from torchvision import transforms
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.tensorboard.writer import SummaryWriter
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 from datasets.images import ImageLabel
 from modelzoo.classifiers import ConvClassifier
@@ -40,7 +41,7 @@ if __name__ == '__main__':
     i = 0
 
     for e in range(config['parameters']['epochs']):
-        for imgs, labels in dataloader:
+        for imgs, labels in tqdm(dataloader):
             imgs, labels = imgs.to(device), labels.to(device)
 
             optimizer.zero_grad()

@@ -8,3 +8,7 @@ Then, create a dataframe that holds your images, e.g.
 ```shell
 python data_to_df.py --folders $PWD/data/apples $PWD/data/bananas
 ```
+Execute the trrainig script with
+```
+python train --config config.yml
+```
